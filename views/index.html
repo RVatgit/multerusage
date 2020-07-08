@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>upload</title>
+    <script src="/bowercom/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="/bowercom/bootstrap/dist/css/bootstrap.css">
+    <script src="/bowercom/bootstrap/dist/js/bootstrap.js"></script>
+    <style>
+        img{
+            width: 30%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body class="container">
+    <h1 class="display-3 text-success text-center">Uploads </h1>
+    <div class="row">
+        <div class="col-md-6 m-auto">
+            <form  class=" "action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="custom-file mb-3"></div>
+                <input type="file" name="file" id="file" class="custom-file-input">
+                <label for="file" class="custom-file-label">Choose File</label>
+                <input type="submit" value="submit" class="btn btn-primary btn-block">
+            </form> 
+        </div>
+    </div>
+    <div class="row">
+        <% if (files) { %>
+
+            <%    files.forEach((file)=>{  %>
+                <div class="card card-body mb-3">
+                    <% if(file.isImage) {  %> 
+                    <img src="image/<%= file.filename %>" alt="">
+                    <form method="POST" action="/files/<%= file._id %>?_method=DELETE" >
+                        <button type="submit" class="btn btn-danger btn-block mt-4">Delete</button>
+                    </form>
+                    <% } else { %>
+                        <%= file.filename %>
+                    <% } %>
+                </div>
+            <% }); %>
+
+        <% } else { %> 
+        <p>No files get lost</p>
+        <% } %>
+
+    </div>
+</body>
+</html>
